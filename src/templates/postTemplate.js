@@ -1,10 +1,10 @@
-import React from "react"
-import { graphql } from "gatsby"
-import Layout from "../components/Layout";
+import React from 'react'
+import { graphql } from 'gatsby'
+import Layout from '../components/Layout'
 import { connect } from 'react-redux'
 import { onSidebarContentExpand } from '../actions/layout'
-import "katex/dist/katex.min.css"
-import { getSidebarExpandedKey } from "../store/selectors";
+import 'katex/dist/katex.min.css'
+import { getSidebarExpandedKey } from '../store/selectors'
 
 function Template({
   data, // this prop will be injected by the GraphQL query below.
@@ -18,24 +18,28 @@ function Template({
   }
 
   return (
-    <Layout sidebarRoot={frontmatter.root} onPostPage={true} slug={markdownRemark.fields.slug} >
-    <div className="blog-post-container">
-      <div className="blog-post">
-        {/* <h1>{frontmatter.title}</h1>
+    <Layout
+      sidebarRoot={frontmatter.root}
+      onPostPage={true}
+      slug={markdownRemark.fields.slug}
+    >
+      <div className="blog-post-container">
+        <div className="blog-post">
+          {/* <h1>{frontmatter.title}</h1>
         <h5>{frontmatter.date}</h5> */}
-        <div
-          className="blog-post-content"
-          dangerouslySetInnerHTML={{ __html: html }}
-        />
+          <div
+            className="blog-post-content"
+            dangerouslySetInnerHTML={{ __html: html }}
+          />
+        </div>
       </div>
-    </div>
     </Layout>
   )
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    expandedKey : getSidebarExpandedKey(state)
+    expandedKey: getSidebarExpandedKey(state),
   }
 }
 
@@ -43,16 +47,18 @@ const mapDispatchToProps = {
   onSidebarContentExpand,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (Template)
+export default connect(mapStateToProps, mapDispatchToProps)(Template)
 
 export const pageQuery = graphql`
   query($path: String!) {
-    markdownRemark(fields: { slug: { eq: $path} }) {
+    markdownRemark(fields: { slug: { eq: $path } }) {
       fields {
         slug
       }
       id
       html
+      tableOfContents
+      timeToRead
       frontmatter {
         date(formatString: "MMMM DD, YYYY")
         title

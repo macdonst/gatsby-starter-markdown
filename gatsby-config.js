@@ -56,6 +56,19 @@ module.exports = {
               className: 'post-toc-anchor',
             },
           },
+          `gatsby-plugin-catch-links`,
+          {
+            resolve: 'gatsby-remark-external-links',
+            options: {
+              target: '_blank',
+            },
+          },
+          {
+            resolve: `gatsby-remark-copy-linked-files`,
+            options: {
+              ignoreFileExtensions: [`png`, `jpg`, `jpeg`, `bmp`, `tiff`, `md`],
+            },
+          },
           {
             resolve: `gatsby-remark-images`,
             options: {
@@ -65,10 +78,23 @@ module.exports = {
               maxWidth: 590,
             },
           },
+          `gatsby-remark-embedder`,
         ],
       },
     },
     `gatsby-plugin-remove-trailing-slashes`,
+    {
+      resolve: `gatsby-source-git`,
+      options: {
+        name: `repo-one`,
+        remote: `https://bitbucket.org/stevetweeddale/markdown-test.git`,
+        // Optionally supply a branch. If none supplied, you'll get the default branch.
+        branch: `develop`,
+        // Tailor which files get imported eg. import the docs folder from a codebase.
+        patterns: `docs/**`,
+      },
+    },
+
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.app/offline
     // 'gatsby-plugin-offline',
